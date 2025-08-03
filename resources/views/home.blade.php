@@ -16,7 +16,7 @@
                     </a>
                 </div>
                 <div class="hero-image">
-                    <img src="/images/header.png" alt="Letselschade-Hotline" />
+                    <img src="/images/header.png" alt="Letselschade-Hotline" loading="lazy" />
                 </div>
             </div>
         </div>

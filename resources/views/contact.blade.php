@@ -12,7 +12,7 @@
                     <p>Neem direct contact met ons op. Wij staan voor u paraat om u te helpen bij uw letselschade claim.</p>
                 </div>
                 <div class="hero-image">
-                    <img src="/images/header.png" alt="Letselschade-Hotline Contact" />
+                    <img src="/images/header.png" alt="Letselschade-Hotline Contact" loading="lazy" />
                 </div>
             </div>
         </div>
@@ -55,9 +55,11 @@
                     </div>
                     <div class="contact-info">
                         <h3>Openingstijden</h3>
-                        <p>Maandag - Vrijdag:<br>9:00 - 18:00</p>
-                        <p>Zaterdag: 10:00 - 16:00</p>
-                        <p>Zondag: Gesloten</p>
+                        <ul class="opening-hours">
+                            <li>Maandag - Vrijdag: 9:00 - 18:00</li>
+                            <li>Zaterdag: 10:00 - 16:00</li>
+                            <li>Zondag: Gesloten</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -71,7 +73,7 @@
             <div class="team-grid">
                 <div class="team-member">
                     <div class="member-photo">
-                        <img src="/images/roel.jpg" alt="Roel van Reenen - Registerexpert Personenschade" />
+                        <img src="/images/roel.jpg" alt="Roel van Reenen - Registerexpert Personenschade" loading="lazy" />
                     </div>
                     <div class="member-info">
                         <h3>Roel van Reenen</h3>
@@ -86,7 +88,7 @@
                 
                 <div class="team-member">
                     <div class="member-photo">
-                        <img src="/images/judith.jpg" alt="Judith van Helmont-Mallee - Registerexpert Personenschade" />
+                        <img src="/images/judith.jpg" alt="Judith van Helmont-Mallee - Registerexpert Personenschade" loading="lazy" />
                     </div>
                     <div class="member-info">
                         <h3>Judith van Helmont-Mallee</h3>
@@ -113,27 +115,27 @@
         <section class="section">
             <h2><i class="fas fa-question-circle"></i> Veelgestelde Vragen</h2>
             
-            <div class="faq-grid">
-                <div class="faq-item">
+            <ul class="faq-list">
+                <li class="faq-item">
                     <h4><i class="fas fa-clock"></i> Hoe snel reageren jullie?</h4>
                     <p>Wij nemen binnen 24 uur contact met u op na het versturen van het contactformulier. Voor spoedgevallen zijn wij ook buiten kantooruren bereikbaar.</p>
-                </div>
+                </li>
                 
-                <div class="faq-item">
+                <li class="faq-item">
                     <h4><i class="fas fa-euro-sign"></i> Wat kost jullie dienstverlening?</h4>
                     <p>U betaalt niets aan ons. Onze dienstverlening verhalen wij op de aansprakelijke partij. U heeft dus geen eigen bijdrage.</p>
-                </div>
+                </li>
                 
-                <div class="faq-item">
+                <li class="faq-item">
                     <h4><i class="fas fa-shield-alt"></i> Hoe beschermen jullie mijn privacy?</h4>
                     <p>Wij behandelen al uw gegevens vertrouwelijk en in overeenstemming met de AVG. Uw privacy staat bij ons voorop.</p>
-                </div>
+                </li>
                 
-                <div class="faq-item">
+                <li class="faq-item">
                     <h4><i class="fas fa-gavel"></i> Wat als ik niet tevreden ben?</h4>
                     <p>U kunt altijd kosteloos van onze diensten afzien. Wij streven naar 100% klanttevredenheid en staan open voor feedback.</p>
-                </div>
-            </div>
+                </li>
+            </ul>
         </section>
 
         <!-- Office Information Section -->
@@ -160,9 +162,11 @@
                 
                 <div class="info-item">
                     <h4><i class="fas fa-certificate"></i> Certificeringen</h4>
-                    <p>• ISO 9001 gecertificeerd<br>
-                    • Lid van Nederlandse Vereniging van Letselschade Advocaten<br>
-                    • Erkend door de Nederlandse Orde van Advocaten</p>
+                    <ul class="certifications">
+                        <li>ISO 9001 gecertificeerd</li>
+                        <li>Lid van Nederlandse Vereniging van Letselschade Advocaten</li>
+                        <li>Erkend door de Nederlandse Orde van Advocaten</li>
+                    </ul>
                 </div>
             </div>
         </section>

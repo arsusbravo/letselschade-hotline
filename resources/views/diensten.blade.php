@@ -12,7 +12,7 @@
                     <p>Professionele begeleiding bij letselschade claims. Wij staan voor u paraat met expertise en ervaring.</p>
                 </div>
                 <div class="hero-image">
-                    <img src="/images/header.png" alt="Letselschade-Hotline Diensten" />
+                    <img src="/images/header.png" alt="Letselschade-Hotline Diensten" loading="lazy" />
                 </div>
             </div>
         </div>
