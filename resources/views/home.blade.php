@@ -11,8 +11,8 @@
                     <h1>De Letselschade-Hotline is er om je direct te helpen</h1>
                     <p>Snel hulp nodig na een ongeval? Wij staan voor u paraat met professionele begeleiding.</p>
                     <a href="#contact" class="cta-button">
-                        <i class="fas fa-phone-alt"></i>
-                        Direct contact opnemen
+                        <i class="fas fa-rocket"></i>
+                        Direct Letselschade-Hotline
                     </a>
                 </div>
                 <div class="hero-image">
@@ -76,15 +76,15 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Letselschade Aanvraag Section -->
         <section class="section" id="contact">
-            <h2><i class="fas fa-phone-volume"></i> Laat geen tijd verloren gaan. Bel ons nu!</h2>
-            <a href="tel:0881234567" class="phone-number">
-                <i class="fas fa-phone"></i> 088 – 123 45 67
+            <h2><i class="fas fa-clipboard-list"></i> Start uw letselschade aanvraag direct!</h2>
+            <a href="tel:0880767676" class="phone-number">
+                <i class="fas fa-phone"></i> 088 076 76 76
             </a>
-            <p>Of vul ons contactformulier in met uw gegevens en wij bellen u zo snel mogelijk terug.</p>
+            <p>Of vul het letselschade aanvraagformulier hieronder in voor een gratis en vrijblijvende beoordeling van uw claim.</p>
 
-            @include('components.contact-form')
+            @include('components.application-form')
         </section>
 
         <!-- Waarom direct bellen section -->
@@ -96,8 +96,8 @@
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <h4><i class="fas fa-phone-alt"></i> 1. Hotline Letselschade</h4>
-                    <a href="tel:0881234567" class="phone-number">
-                        <i class="fas fa-phone"></i> 088 – 123 45 67
+                    <a href="tel:0880767676" class="phone-number">
+                        <i class="fas fa-phone"></i> 088 076 76 76
                     </a>
                 </div>
                 <div class="benefit-card">

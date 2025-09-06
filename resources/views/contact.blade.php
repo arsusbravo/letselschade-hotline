@@ -32,7 +32,7 @@
                     </div>
                     <div class="contact-info">
                         <h3>Telefoon</h3>
-                        <a href="tel:0881234567" class="phone-number">088 – 123 45 67</a>
+                        <a href="tel:0880767676" class="phone-number">088 076 76 76</a>
                         <p>Maandag t/m Vrijdag:<br>9:00 - 18:00</p>
                         <p>Weekend: 10:00 - 16:00</p>
                     </div>
@@ -80,7 +80,7 @@
                         <p class="member-title">Registerexpert Personenschade (NIVRE)</p>
                         <p class="member-description">Ruim 25 jaar ervaring als belangenbehartiger. Het slachtoffer staat altijd centraal en heeft recht op de best mogelijke zorg en persoonlijke begeleiding.</p>
                         <div class="member-contact">
-                            <p><i class="fas fa-phone"></i> 088 – 123 45 67</p>
+                            <p><i class="fas fa-phone"></i> 088 076 76 76</p>
                             <p><i class="fas fa-envelope"></i> roel@letselschade-hotline.nl</p>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         <p class="member-title">Registerexpert Personenschade (NIVRE)</p>
                         <p class="member-description">Gespecialiseerd in het begeleiden van slachtoffers van verkeersongevallen en arbeidsongevallen. Persoonlijk contact met cliënten staat hoog in het vaandel.</p>
                         <div class="member-contact">
-                            <p><i class="fas fa-phone"></i> 088 – 123 45 67</p>
+                            <p><i class="fas fa-phone"></i> 088 076 76 76</p>
                             <p><i class="fas fa-envelope"></i> judith@letselschade-hotline.nl</p>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                 
                 <div class="info-item">
                     <h4><i class="fas fa-phone"></i> Contact</h4>
-                    <p>Telefoon: 088 – 123 45 67<br>
+                    <p>Telefoon: 088 076 76 76<br>
                     Email: info@letselschade-hotline.nl<br>
                     KvK: 12345678<br>
                     BTW: NL123456789B01</p>

@@ -171,8 +171,8 @@
             <p>Neem vandaag nog contact met ons op voor een gratis intakegesprek. Wij staan voor u paraat om u te helpen.</p>
             
             <div class="cta-section">
-                <a href="tel:0881234567" class="phone-number">
-                    <i class="fas fa-phone"></i> 088 – 123 45 67
+                <a href="tel:0880767676" class="phone-number">
+                    <i class="fas fa-phone"></i> 088 076 76 76
                 </a>
                 <a href="/contact" class="cta-button">
                     <i class="fas fa-envelope"></i>

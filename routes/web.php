@@ -13,3 +13,9 @@ Route::get('/diensten', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/letselschadetest', function () {
+    return view('letselschadetest');
+});
+
+Route::post('/letselschade/submit', [App\Http\Controllers\LetselschadeController::class, 'submit'])->name('letselschade.submit');
