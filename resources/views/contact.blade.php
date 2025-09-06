@@ -65,6 +65,20 @@
             </div>
         </section>
 
+        <!-- Letselschadetest Section -->
+        <section class="section">
+            <h2><i class="fas fa-clipboard-check"></i> Test eerst uw kansen</h2>
+            <p>Voordat u contact opneemt, kunt u eerst onze gratis letselschadetest doen. Ontdek binnen 2 minuten of u recht heeft op schadevergoeding.</p>
+            
+            <div class="test-cta-section">
+                <a href="/letselschadetest" class="cta-button test-button">
+                    <i class="fas fa-play-circle"></i>
+                    Start de Letselschadetest
+                </a>
+                <p class="test-note">100% gratis • 2 minuten • Direct resultaat</p>
+            </div>
+        </section>
+
         <!-- Team Section -->
         <div class="team-section">
             <h2><i class="fas fa-users"></i> Ons Team</h2>

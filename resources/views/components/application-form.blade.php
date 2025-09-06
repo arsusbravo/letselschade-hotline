@@ -63,8 +63,14 @@
             </div>
         </div>
         
-        <form action="{{ route('letselschade.submit') }}" method="POST" id="application-form" novalidate>
+        <form action="{{ route('webreaction.store') }}" method="POST" id="application-form" novalidate>
         @csrf
+        
+        <!-- Required fields for WebreactionController -->
+        <input type="hidden" name="lead_type_id" value="1">
+        <input type="hidden" name="postal_code_id" value="1000">
+        <input type="hidden" name="postal_code_letters" value="AA">
+        <input type="hidden" name="house_number" value="1">
         
         <!-- Stap 1 - Soort ongeval -->
         <div class="form-step active" data-step="1">
@@ -78,35 +84,35 @@
                 <label><i class="fas fa-question-circle"></i> Waarmee had u te maken? *</label>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="ongeval" value="verkeer" required>
+                        <input type="radio" name="soort_ongeval" value="verkeer" required>
                         <div class="radio-card">
                             <i class="fas fa-car radio-icon"></i>
                             <span class="radio-text">Verkeersongeval</span>
                         </div>
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="ongeval" value="bedrijf" required>
+                        <input type="radio" name="soort_ongeval" value="bedrijf" required>
                         <div class="radio-card">
                             <i class="fas fa-building radio-icon"></i>
                             <span class="radio-text">Bedrijfsongeval</span>
                         </div>
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="ongeval" value="dier" required>
+                        <input type="radio" name="soort_ongeval" value="dier" required>
                         <div class="radio-card">
                             <i class="fas fa-paw radio-icon"></i>
                             <span class="radio-text">Letsel door dier</span>
                         </div>
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="ongeval" value="wegdek" required>
+                        <input type="radio" name="soort_ongeval" value="wegdek" required>
                         <div class="radio-card">
                             <i class="fas fa-road radio-icon"></i>
                             <span class="radio-text">Schade door slecht wegdek</span>
                         </div>
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="ongeval" value="sportschool" required>
+                        <input type="radio" name="soort_ongeval" value="sportschool" required>
                         <div class="radio-card">
                             <i class="fas fa-dumbbell radio-icon"></i>
                             <span class="radio-text">Schade in de sportschool</span>
@@ -138,7 +144,7 @@
             
             <div class="form-group">
                 <label for="datum_ongeval"><i class="fas fa-calendar"></i> Datum van het ongeval *</label>
-                <input type="date" id="datum_ongeval" name="datum_ongeval" max="{{ date('Y-m-d') }}" required>
+                <input type="date" id="ongeval_datum" name="ongeval_datum" max="{{ date('Y-m-d') }}" required>
                 <small class="field-help">Selecteer de datum waarop het ongeval heeft plaatsgevonden (vandaag of eerder)</small>
             </div>
 
@@ -184,7 +190,7 @@
 
             <div class="form-group">
                 <label for="letsel"><i class="fas fa-heartbeat"></i> Korte omschrijving letsel *</label>
-                <textarea id="letsel" name="letsel" rows="3" placeholder="Beschrijf kort het opgelopen letsel" required></textarea>
+                <textarea id="letsel_beschrijving" name="letsel_beschrijving" rows="3" placeholder="Beschrijf kort het opgelopen letsel" required></textarea>
             </div>
             
             <!-- Navigation -->
@@ -387,20 +393,47 @@
             </div>
             <h3><i class="fas fa-address-book"></i> Stap 6 – Contactgegevens</h3>
             
-            <div class="form-group">
-                <label for="naam"><i class="fas fa-user"></i> Naam *</label>
-                <input type="text" id="naam" name="naam" placeholder="Volledige naam" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstname"><i class="fas fa-user"></i> Voornaam *</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="Voornaam" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname"><i class="fas fa-user"></i> Achternaam *</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="Achternaam" required>
+                </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="telefoon"><i class="fas fa-phone"></i> Telefoonnummer *</label>
-                    <input type="tel" id="telefoon" name="telefoon" placeholder="088 076 76 76" required>
+                    <label for="telephone"><i class="fas fa-phone"></i> Telefoonnummer *</label>
+                    <input type="tel" id="telephone" name="telephone" placeholder="088 076 76 76" required>
                 </div>
                 <div class="form-group">
                     <label for="email"><i class="fas fa-envelope"></i> E-mailadres *</label>
                     <input type="email" id="email" name="email" placeholder="uw@email.nl" required>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="availableTime"><i class="fas fa-clock"></i> Wanneer bent u het beste te bereiken? *</label>
+                <select id="availableTime" name="availableTime" required>
+                    <option value="">Selecteer tijd</option>
+                    <option value="9">09:00</option>
+                    <option value="10">10:00</option>
+                    <option value="11">11:00</option>
+                    <option value="12">12:00</option>
+                    <option value="13">13:00</option>
+                    <option value="14">14:00</option>
+                    <option value="15">15:00</option>
+                    <option value="16">16:00</option>
+                    <option value="17">17:00</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="details"><i class="fas fa-comment"></i> Eventuele vragen en/of opmerkingen</label>
+                <textarea id="details" name="details" rows="3" placeholder="Heeft u nog vragen of opmerkingen?"></textarea>
             </div>
 
             <!-- Privacy en Newsletter -->

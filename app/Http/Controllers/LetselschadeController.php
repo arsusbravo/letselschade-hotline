@@ -93,17 +93,19 @@ class LetselschadeController extends Controller
             });
             */
 
+            // Set session flag to allow access to thank you page
+            session(['form_submitted' => true, 'submission_time' => time()]);
+            
             // Check if this is an AJAX request
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Bedankt voor uw aanvraag! Wij nemen binnen 2 uur contact met u op om uw situatie te bespreken.'
+                    'message' => 'Bedankt voor uw aanvraag! Wij nemen binnen 2 uur contact met u op om uw situatie te bespreken.',
+                    'redirect' => url('/thank-you')
                 ]);
             }
 
-            return redirect()->back()->with('success', 
-                'Bedankt voor uw aanvraag! Wij nemen binnen 2 uur contact met u op om uw situatie te bespreken.'
-            );
+            return redirect()->route('thank-you');
 
         } catch (\Exception $e) {
             Log::error('Error processing letselschade form', [
@@ -124,5 +126,25 @@ class LetselschadeController extends Controller
                 ->withErrors(['Er is een fout opgetreden bij het verwerken van uw aanvraag. Probeer het opnieuw of neem direct contact met ons op.'])
                 ->withInput();
         }
+    }
+
+    public function thankYou(Request $request)
+    {
+        // Check if user has permission to access this page
+        if (!session('form_submitted') || !session('submission_time')) {
+            return redirect()->route('home')->with('error', 'Deze pagina is alleen toegankelijk na het indienen van een aanvraag.');
+        }
+
+        // Check if submission is not too old (24 hours)
+        $submissionTime = session('submission_time');
+        if (time() - $submissionTime > 86400) { // 24 hours
+            session()->forget(['form_submitted', 'submission_time']);
+            return redirect()->route('home')->with('error', 'Deze pagina is verlopen. Vul het formulier opnieuw in.');
+        }
+
+        // Clear the session flags after showing the page
+        session()->forget(['form_submitted', 'submission_time']);
+
+        return view('thank-you');
     }
 }

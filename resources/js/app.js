@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Phone validation
-        const phoneField = form.querySelector('input[name="telefoon"]');
+        const phoneField = form.querySelector('input[name="telephone"]');
         if (phoneField) {
             phoneField.addEventListener('blur', function() {
                 validatePhone(this);
@@ -73,6 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+    
+    // Initialize Contact Form Validation
+    initContactFormValidation();
 });
 
 function validateField(field) {
@@ -166,7 +169,7 @@ function validateForm() {
     }
     
     // Validate phone specifically  
-    const phoneField = form.querySelector('input[name="telefoon"]');
+    const phoneField = form.querySelector('input[name="telephone"]');
     if (phoneField && !validatePhone(phoneField)) {
         isValid = false;
     }
@@ -273,16 +276,6 @@ function submitFormWithAxios(form) {
         formData.append('extra_hulp[]', checkbox.value);
     });
     
-    // Debug: Log form data
-    console.log('Form data being submitted:');
-    for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-    }
-    
-    // Also log the raw form element to check for missing fields
-    console.log('Form element:', form);
-    console.log('All form inputs:', form.querySelectorAll('input, textarea, select'));
-    
     // Submit with Axios
     axios.post(form.action, formData, {
         headers: {
@@ -294,17 +287,23 @@ function submitFormWithAxios(form) {
     .then(function (response) {
         // Success handling
                 if (response.data.success) {
-                    showSuccessMessage(response.data.message);
-                    form.reset(); // Clear the form
-                    clearAllValidationStates(); // Clear validation states
-                    
-                    // Scroll to success message
-                    setTimeout(() => {
-                        const alertElement = document.querySelector('.alert-success');
-                        if (alertElement) {
-                            alertElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    }, 100);
+                    // Check if there's a redirect URL
+                    if (response.data.redirect) {
+                        // Redirect to thank you page
+                        window.location.href = response.data.redirect;
+                    } else {
+                        showSuccessMessage(response.data.message);
+                        form.reset(); // Clear the form
+                        clearAllValidationStates(); // Clear validation states
+                        
+                        // Scroll to success message
+                        setTimeout(() => {
+                            const alertElement = document.querySelector('.alert-success');
+                            if (alertElement) {
+                                alertElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }, 100);
+                    }
                 } else {
                     showErrorMessage(response.data.message || 'Er is een onbekende fout opgetreden.');
                     
@@ -386,6 +385,7 @@ function submitFormWithAxios(form) {
     });
 }
 
+
 function clearExistingAlerts() {
     const existingAlerts = document.querySelectorAll('.alert');
     existingAlerts.forEach(alert => alert.remove());
@@ -399,8 +399,18 @@ function showSuccessMessage(message) {
         ${message}
     `;
     
-    const form = document.getElementById('application-form');
-    form.parentNode.insertBefore(alertDiv, form);
+    // Try to find application form first, then contact form
+    let form = document.getElementById('application-form');
+    if (!form) {
+        form = document.getElementById('contact-form');
+    }
+    
+    if (form && form.parentNode) {
+        form.parentNode.insertBefore(alertDiv, form);
+    } else {
+        // Fallback: insert at the beginning of the body
+        document.body.insertBefore(alertDiv, document.body.firstChild);
+    }
 }
 
 function showErrorMessage(message) {
@@ -411,8 +421,18 @@ function showErrorMessage(message) {
         ${message}
     `;
     
-    const form = document.getElementById('application-form');
-    form.parentNode.insertBefore(alertDiv, form);
+    // Try to find application form first, then contact form
+    let form = document.getElementById('application-form');
+    if (!form) {
+        form = document.getElementById('contact-form');
+    }
+    
+    if (form && form.parentNode) {
+        form.parentNode.insertBefore(alertDiv, form);
+    } else {
+        // Fallback: insert at the beginning of the body
+        document.body.insertBefore(alertDiv, document.body.firstChild);
+    }
     
     // Scroll to error message
     alertDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -650,8 +670,12 @@ function validateCurrentStep() {
     
     // Validate required fields in current step
     const requiredFields = currentStepElement.querySelectorAll('[required]');
+    console.log(`Found ${requiredFields.length} required fields in step ${currentStep}`);
+    
     requiredFields.forEach(field => {
+        console.log(`Validating field: ${field.name || field.id}, value: "${field.value}", type: ${field.type}`);
         if (!validateField(field)) {
+            console.log(`Field validation failed: ${field.name || field.id}`);
             isValid = false;
         }
     });
@@ -663,23 +687,29 @@ function validateCurrentStep() {
     }
     
     // Validate phone if present in current step
-    const phoneField = currentStepElement.querySelector('input[name="telefoon"]');
+    const phoneField = currentStepElement.querySelector('input[name="telephone"]');
     if (phoneField && !validatePhone(phoneField)) {
         isValid = false;
     }
     
     // Validate radio groups in current step
     const radioGroups = currentStepElement.querySelectorAll('.radio-group');
-    radioGroups.forEach(group => {
+    console.log(`Found ${radioGroups.length} radio groups in step ${currentStep}`);
+    
+    radioGroups.forEach((group, index) => {
         const requiredRadio = group.querySelector('input[required]');
         if (requiredRadio) {
             const checked = group.querySelector('input[type="radio"]:checked');
             const formGroup = group.closest('.form-group');
             
+            console.log(`Radio group ${index}: required=${!!requiredRadio}, checked=${!!checked}, formGroup=${!!formGroup}`);
+            
             if (!checked && formGroup) {
+                console.log(`Radio group ${index} validation failed - no option selected`);
                 showError(formGroup, 'Selecteer alstublieft een optie');
                 isValid = false;
             } else if (checked && formGroup) {
+                console.log(`Radio group ${index} validation passed - option selected`);
                 showSuccess(formGroup);
             }
         }
@@ -689,10 +719,11 @@ function validateCurrentStep() {
     switch(currentStep) {
         case 1:
             // Validate accident type selection
-            const accidentType = currentStepElement.querySelector('input[name="ongeval"]:checked');
-            if (!accidentType) {
+            const accidentTypeField = currentStepElement.querySelector('input[name="soort_ongeval"]:checked');
+            console.log(`Accident type selected: ${accidentTypeField ? accidentTypeField.value : 'none'}`);
+            if (!accidentTypeField) {
+                console.log('No accident type selected - validation will fail');
                 isValid = false;
-                showStepError('Selecteer alstublieft het soort ongeval');
             }
             break;
             
@@ -753,6 +784,8 @@ function validateCurrentStep() {
             }
             break;
     }
+    
+    console.log(`Final validation result for step ${currentStep}: ${isValid}`);
     
     if (!isValid) {
         // Scroll to first error in current step
@@ -829,3 +862,265 @@ function showStepError(message) {
         }
     }
 }
+
+// Contact Form Validation
+function initContactFormValidation() {
+    const contactForm = document.getElementById('contact-form');
+    console.log('Contact form found:', contactForm ? 'Yes' : 'No');
+    if (!contactForm) return;
+    
+    // Add event listeners to all form fields
+    const fields = contactForm.querySelectorAll('input, textarea, select');
+    fields.forEach(field => {
+        field.addEventListener('blur', function() {
+            validateContactField(this);
+        });
+        
+        field.addEventListener('input', function() {
+            // Clear error on input for better UX
+            clearContactFieldError(this);
+        });
+    });
+    
+    // Form submission handler
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitContactForm(this);
+    });
+}
+
+function validateContactField(field) {
+    const formGroup = field.closest('.form-group');
+    const fieldName = field.name;
+    const value = field.value.trim();
+    
+    // Skip validation for hidden fields or fields without form-group
+    if (!formGroup || field.type === 'hidden') {
+        return true;
+    }
+    
+    // Clear previous errors
+    clearContactFieldError(field);
+    
+    // Required field validation
+    if (field.hasAttribute('required') && !value) {
+        showContactFieldError(field, getRequiredMessage(fieldName));
+        return false;
+    }
+    
+    // Specific field validations
+    switch (fieldName) {
+        case 'firstname':
+        case 'lastname':
+            if (value && value.length < 2) {
+                showContactFieldError(field, 'Naam moet minimaal 2 karakters bevatten');
+                return false;
+            }
+            break;
+            
+        case 'email':
+            if (value && !isValidEmail(value)) {
+                showContactFieldError(field, 'Voer een geldig e-mailadres in');
+                return false;
+            }
+            break;
+            
+        case 'telephone':
+            if (value && !isValidPhone(value)) {
+                showContactFieldError(field, 'Voer een geldig telefoonnummer in');
+                return false;
+            }
+            break;
+            
+        case 'details':
+            if (value && value.length < 10) {
+                showContactFieldError(field, 'Bericht moet minimaal 10 karakters bevatten');
+                return false;
+            }
+            if (value && value.length > 2000) {
+                showContactFieldError(field, 'Bericht mag maximaal 2000 karakters bevatten');
+                return false;
+            }
+            break;
+            
+        case 'captcha_answer':
+            if (value && !isValidCaptchaAnswer(value)) {
+                showContactFieldError(field, 'Voer een geldig getal in');
+                return false;
+            }
+            break;
+    }
+    
+    return true;
+}
+
+function clearContactFieldError(field) {
+    const formGroup = field.closest('.form-group');
+    if (formGroup) {
+        const errorElement = formGroup.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+    }
+    field.classList.remove('error');
+}
+
+function showContactFieldError(field, message) {
+    const formGroup = field.closest('.form-group');
+    
+    // Only show errors for fields that have a form-group parent
+    if (!formGroup) return;
+    
+    // Remove existing error
+    clearContactFieldError(field);
+    
+    // Add error class
+    field.classList.add('error');
+    
+    // Create error element
+    const errorElement = document.createElement('div');
+    errorElement.className = 'field-error';
+    errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+    
+    // Insert after the field
+    field.parentNode.insertBefore(errorElement, field.nextSibling);
+}
+
+function getRequiredMessage(fieldName) {
+    const messages = {
+        'firstname': 'Voornaam is verplicht',
+        'lastname': 'Achternaam is verplicht',
+        'email': 'E-mailadres is verplicht',
+        'subject': 'Selecteer een onderwerp',
+        'details': 'Bericht is verplicht',
+        'captcha_answer': 'Anti-spam verificatie is verplicht',
+        'privacy_akkoord': 'U moet akkoord gaan met de privacyverklaring'
+    };
+    return messages[fieldName] || 'Dit veld is verplicht';
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isValidPhone(phone) {
+    const phoneRegex = /^[\d\s\+\-\(\)]{10,}$/;
+    return phoneRegex.test(phone);
+}
+
+function isValidCaptchaAnswer(answer) {
+    return !isNaN(answer) && parseInt(answer) >= 0;
+}
+
+function submitContactForm(form) {
+    // Validate all fields
+    const fields = form.querySelectorAll('input, textarea, select');
+    let isValid = true;
+    
+    fields.forEach(field => {
+        if (!validateContactField(field)) {
+            isValid = false;
+        }
+    });
+    
+    // Check privacy checkbox
+    const privacyCheckbox = form.querySelector('input[name="privacy_akkoord"]');
+    if (privacyCheckbox && !privacyCheckbox.checked) {
+        showContactFieldError(privacyCheckbox, 'U moet akkoord gaan met de privacyverklaring');
+        isValid = false;
+    }
+    
+    if (!isValid) {
+        // Scroll to first error
+        const firstError = form.querySelector('.field-error');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+    }
+    
+    // Submit the form
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalText = submitBtn.innerHTML;
+    
+    // Show loading state
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Bezig met verzenden...';
+    
+    // Clear any existing alerts
+    clearExistingAlerts();
+    
+    // Prepare form data
+    const formData = new FormData(form);
+    
+    // Debug: Log form data
+    console.log('Contact form data being submitted:');
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    }
+    
+    // Submit with Axios
+    axios.post(form.action, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        }
+    })
+    .then(function (response) {
+        if (response.data.success) {
+            showSuccessMessage(response.data.message);
+            form.reset(); // Clear the form
+            
+            // Scroll to success message
+            setTimeout(() => {
+                const alertElement = document.querySelector('.alert-success');
+                if (alertElement) {
+                    alertElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        } else {
+            showErrorMessage(response.data.message || 'Er is een onbekende fout opgetreden.');
+        }
+    })
+    .catch(function (error) {
+        console.error('Contact form error:', error);
+        
+        if (error.response) {
+            if (error.response.status === 422) {
+                // Validation errors
+                const errors = error.response.data.errors;
+                showValidationErrors(errors);
+                
+                // Show general error message
+                showErrorMessage(error.response.data.message || 'Er zijn enkele problemen met uw invoer.');
+            } else {
+                // Other server errors
+                showErrorMessage(error.response.data.message || 'Er is een serverfout opgetreden. Probeer het opnieuw.');
+            }
+        } else if (error.request) {
+            // Network error
+            showErrorMessage('Er is een netwerkfout opgetreden. Controleer uw internetverbinding en probeer het opnieuw.');
+        } else {
+            // Other error
+            showErrorMessage('Er is een onverwachte fout opgetreden. Probeer het opnieuw.');
+        }
+        
+        // Scroll to error message
+        setTimeout(() => {
+            const alertElement = document.querySelector('.alert-error');
+            if (alertElement) {
+                alertElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 100);
+    })
+    .finally(function () {
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    });
+}
+

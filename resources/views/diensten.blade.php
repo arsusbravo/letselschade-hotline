@@ -123,6 +123,16 @@
                     <p>Wij beoordelen uw juridische positie en zorgen ervoor dat u de maximale schadevergoeding krijgt waar u recht op heeft.</p>
                 </div>
             </div>
+            
+            <!-- Letselschadetest CTA -->
+            <div class="test-cta-section">
+                <h3><i class="fas fa-clipboard-check"></i> Test eerst uw kansen</h3>
+                <p>Ontdek binnen 2 minuten of u recht heeft op schadevergoeding met onze gratis letselschadetest.</p>
+                <a href="/letselschadetest" class="cta-button test-button">
+                    <i class="fas fa-play-circle"></i>
+                    Start de Letselschadetest
+                </a>
+            </div>
         </section>
 
         <!-- Uw Herstel Staat Voorop Section -->

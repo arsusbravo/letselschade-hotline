@@ -1,100 +1,66 @@
 <div class="contact-form">
-    <form action="#" method="POST">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="first_name"><i class="fas fa-user"></i> Voornaam *</label>
-                <input type="text" id="first_name" name="first_name" required>
-            </div>
-            <div class="form-group">
-                <label for="last_name"><i class="fas fa-user"></i> Achternaam *</label>
-                <input type="text" id="last_name" name="last_name" required>
-            </div>
+    <form action="/webreaction/contact" method="POST" id="contact-form">
+        @csrf
+        
+        <!-- Anti-spam honeypot field (hidden) -->
+        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+        
+        <!-- Anti-spam timestamp -->
+        <input type="hidden" name="form_start_time" value="{{ time() }}">
+        
+        <div class="form-group">
+            <label for="gender"><i class="fas fa-user"></i> Aanhef *</label>
+            <select id="gender" name="gender" required>
+                <option value="">Selecteer aanhef</option>
+                <option value="dhr">Dhr.</option>
+                <option value="mevr">Mevr.</option>
+            </select>
         </div>
         
         <div class="form-row">
             <div class="form-group">
-                <label for="email"><i class="fas fa-envelope"></i> Email *</label>
-                <input type="email" id="email" name="email" required>
+                <label for="firstname"><i class="fas fa-user"></i> Voornaam *</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Voornaam" required>
             </div>
             <div class="form-group">
-                <label for="phone"><i class="fas fa-phone"></i> Telefoonnummer *</label>
-                <input type="tel" id="phone" name="phone" required>
+                <label for="lastname"><i class="fas fa-user"></i> Achternaam *</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Achternaam" required>
             </div>
         </div>
         
         <div class="form-group">
-            <label for="address"><i class="fas fa-map-marker-alt"></i> Adres *</label>
-            <input type="text" id="address" name="address" placeholder="Straat, huisnummer, postcode en plaats" required>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label for="accident_date"><i class="fas fa-calendar"></i> Datum ongeval *</label>
-                <input type="date" id="accident_date" name="accident_date" required>
-            </div>
-            <div class="form-group">
-                <label for="accident_type"><i class="fas fa-car-crash"></i> Type ongeval *</label>
-                <select id="accident_type" name="accident_type" required>
-                    <option value="">Selecteer type ongeval</option>
-                    <option value="verkeer">Verkeersongeval</option>
-                    <option value="werk">Arbeidsongeval</option>
-                    <option value="sport">Sportongeval</option>
-                    <option value="medisch">Medische fout</option>
-                    <option value="slip">Slip en val</option>
-                    <option value="anders">Anders</option>
-                </select>
-            </div>
+            <label for="email"><i class="fas fa-envelope"></i> E-mailadres *</label>
+            <input type="email" id="email" name="email" placeholder="uw@email.nl" required>
         </div>
         
         <div class="form-group">
-            <label for="accident_description"><i class="fas fa-file-alt"></i> Wat is er gebeurd? *</label>
-            <textarea id="accident_description" name="accident_description" rows="4" placeholder="Beschrijf kort wat er is gebeurd en welke letsel u heeft opgelopen" required></textarea>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label for="liable_party"><i class="fas fa-question-circle"></i> Is er een schuldige wederpartij?</label>
-                <select id="liable_party" name="liable_party">
-                    <option value="">Selecteer een optie</option>
-                    <option value="yes">Ja</option>
-                    <option value="no">Nee</option>
-                    <option value="unknown">Onbekend</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="call_time"><i class="fas fa-clock"></i> Wanneer mogen wij u bellen?</label>
-                <select id="call_time" name="call_time">
-                    <option value="">Selecteer een tijdstip</option>
-                    <option value="morning">Ochtend (9:00 - 12:00)</option>
-                    <option value="afternoon">Middag (12:00 - 17:00)</option>
-                    <option value="evening">Avond (17:00 - 20:00)</option>
-                </select>
-            </div>
+            <label for="telefoon"><i class="fas fa-phone"></i> Telefoonnummer</label>
+            <input type="tel" id="telefoon" name="telefoon" placeholder="088 076 76 76">
+            <small class="field-help">Optioneel - wij bellen u terug als u dit invult</small>
         </div>
         
         <div class="form-group">
-            <label for="additional_info"><i class="fas fa-info-circle"></i> Aanvullende informatie</label>
-            <textarea id="additional_info" name="additional_info" rows="3" placeholder="Eventuele aanvullende informatie die u wilt delen"></textarea>
+            <label for="subject"><i class="fas fa-tag"></i> Onderwerp *</label>
+            <select id="subject" name="subject" required>
+                <option value="">Selecteer een onderwerp</option>
+                <option value="letselschade">Letselschade claim</option>
+                <option value="verkeer">Verkeersongeval</option>
+                <option value="werk">Arbeidsongeval</option>
+                <option value="medisch">Medische fout</option>
+                <option value="slip">Slip en val</option>
+                <option value="vraag">Algemene vraag</option>
+                <option value="anders">Anders</option>
+            </select>
         </div>
         
-        <div class="form-group checkbox-group">
-            <label class="checkbox-label">
-                <input type="checkbox" name="privacy_policy" required>
-                <span class="checkmark"></span>
-                Ik ga akkoord met de <a href="#" class="link">privacyverklaring</a> *
-            </label>
+        <div class="form-group">
+            <label for="details"><i class="fas fa-comment"></i> Bericht *</label>
+            <textarea id="details" name="details" rows="5" placeholder="Beschrijf uw situatie of vraag..." required></textarea>
         </div>
         
-        <div class="form-group checkbox-group">
-            <label class="checkbox-label">
-                <input type="checkbox" name="newsletter">
-                <span class="checkmark"></span>
-                Ik wil op de hoogte blijven van letselschade nieuws (optioneel)
-            </label>
-        </div>
         
         <button type="submit" class="submit-btn">
-            <i class="fas fa-paper-plane"></i> Versturen
+            <i class="fas fa-paper-plane"></i> Bericht versturen
         </button>
     </form>
-</div> 
+</div>
