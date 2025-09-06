@@ -6,7 +6,10 @@
                 <i class="fas fa-shield-alt"></i>
                 <span>Letselschade-Hotline</span>
             </a>
-            <ul class="nav-links">
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
                 <li><a href="/diensten" class="{{ request()->is('diensten') ? 'active' : '' }}">Diensten</a></li>
                 <li><a href="/letselschadetest" class="{{ request()->is('letselschadetest') ? 'active' : '' }}">Letselschadetest</a></li>

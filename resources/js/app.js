@@ -2,6 +2,37 @@ import './bootstrap';
 
 // Application Form Validation and Wizard
 document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('mobile-menu');
+            
+            // Toggle hamburger icon
+            const icon = mobileMenuToggle.querySelector('i');
+            if (navLinks.classList.contains('mobile-menu')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinkItems = navLinks.querySelectorAll('a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('mobile-menu');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+    }
+    
     const form = document.getElementById('application-form');
     
     if (form) {
