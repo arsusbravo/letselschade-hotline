@@ -288,11 +288,20 @@ body {
     padding: 4rem 0;
 }
 
+/* Better spacing for content sections */
+.main-content .section:first-child {
+    margin-top: 0;
+}
+
+.main-content .section:last-child {
+    margin-bottom: 0;
+}
+
 .section {
     background: white;
     border-radius: 20px;
     padding: 3rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -316,6 +325,15 @@ body {
     font-weight: 600;
     margin-bottom: 1rem;
     color: #374151;
+}
+
+.section p {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+.section p:last-child {
+    margin-bottom: 0;
 }
 
 .benefits-grid {
@@ -2219,21 +2237,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Section Responsive Styles */
 @media (max-width: 768px) {
-    .section {
+    .main-content {
         padding: 2rem 0;
+    }
+    
+    .section {
+        padding: 2rem;
+        margin: 1.5rem 0;
     }
     
     .section h2 {
         font-size: 1.75rem;
+        margin-bottom: 1.25rem;
     }
     
     .section h3 {
         font-size: 1.25rem;
+        margin-bottom: 0.75rem;
     }
     
     .benefits-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        margin: 1.5rem 0;
     }
     
     .benefit-card {
@@ -2250,16 +2276,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 480px) {
-    .section {
+    .main-content {
         padding: 1.5rem 0;
+    }
+    
+    .section {
+        padding: 1.5rem;
+        margin: 1rem 0;
     }
     
     .section h2 {
         font-size: 1.5rem;
+        margin-bottom: 1rem;
     }
     
     .section h3 {
         font-size: 1.1rem;
+        margin-bottom: 0.5rem;
     }
     
     .benefit-card {
