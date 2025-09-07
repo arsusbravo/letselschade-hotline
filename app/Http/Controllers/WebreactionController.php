@@ -11,12 +11,21 @@ class WebreactionController extends Controller
     protected $webreactionService;
     protected $apiUsername;
     protected $apiPassword;
+    protected $postal_code_id;
+    protected $postal_code_letters;
+    protected $house_number;
+    protected $webmodule_id;
 
     public function __construct(WebreactionService $webreactionService)
     {
         $this->webreactionService = $webreactionService;
         $this->apiUsername = 'api@ongevalclaimen.nl';
         $this->apiPassword = 'c8MaUXZ6';
+
+        $this->postal_code_id = '4825';
+        $this->postal_code_letters = 'AM';
+        $this->house_number = '8';
+        $this->webmodule_id = 11;
     }
 
     public function contact(Request $request)
@@ -33,6 +42,7 @@ class WebreactionController extends Controller
                 'firstname' => 'required|string',
                 'lastname' => 'required|string',
                 'email' => 'required|string|email',
+                'telephone' => 'nullable|string',
                 'subject' => 'required|string',
                 'details' => 'required|string',
             ]);
@@ -50,30 +60,17 @@ class WebreactionController extends Controller
             ];
             
 
-            // For now, return success without calling external API
-            // TODO: Enable external API call when API is properly configured
             try {
                 // Set session flag to allow access to thank you page
                 session(['form_submitted' => true, 'submission_time' => time()]);
-                
-                // Log the data that would be sent to the external API
-                Log::info('Contact data (not sent to API):', $requestData);
-                
-                // Return success response
-                if ($request->expectsJson()) {
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Uw bericht is succesvol verzonden! Wij nemen spoedig contact met u op.',
-                        'redirect' => url('/thank-you')
-                    ]);
-                }
-                return redirect()->route('thank-you');
-                
-                /* 
-                // Uncomment this section when external API is ready
+
                 $type = 'error';
                 $messages = '';
+                
+                // Call the external API
                 $response = $this->webreactionService->storeData($requestData);
+                
+                Log::info('Webreaction contact API response:', $response);
 
                 if(isset($response['contact_mail'])) 
                 {
@@ -83,16 +80,20 @@ class WebreactionController extends Controller
                     } else {
                         $messages = $response['contact_mail']['validate'];
                     }
+                } else {
+                    // If no specific response structure, assume success
+                    $type = 'success';
+                    $messages = 'Uw bericht is succesvol verzonden. Wij nemen zo snel mogelijk contact met u op.';
                 }
 
                 if ($request->expectsJson()) {
                     return response()->json([
                         'success' => $type === 'success',
-                        'message' => $messages
+                        'message' => $messages,
+                        'redirect' => url('/thank-you')
                     ]);
                 }
                 return redirect()->back()->with($type . '_msg', $messages);
-                */
             } catch (\Exception $e) {
                 // Handle the error (log it, show error message, etc.)
                 Log::error('Webreaction contact error: ' . $e->getMessage());
@@ -127,6 +128,7 @@ class WebreactionController extends Controller
             'lastname' => 'required|string',
             'email' => 'required|string|email',
             'telephone' => 'required|string',
+            'details' => 'string',
         ]);
 
         $userData = [
@@ -134,12 +136,8 @@ class WebreactionController extends Controller
             'api_password' => $this->apiPassword,
         ];
 
-        $postal_code_id = '4825';
-        $postal_code_letters = 'AM';
-        $house_number = '8';
-
         $webreactionData = [
-            'webmodule_id' => 1,
+            'webmodule_id' => $this->webmodule_id,
             'lead_webreaction_type_id' => 1,
             'domain_name' => $request->getHost(),
             'lead_type_id' => $validated['lead_type_id'],
@@ -149,9 +147,10 @@ class WebreactionController extends Controller
             'lastname' => $validated['lastname'],
             'email' => $validated['email'],
             'telephone' => $validated['telephone'],
-            'house_number' => $house_number,
-            'postal_code_id' => $postal_code_id,
-            'postal_code_letters' => $postal_code_letters,
+            'details' => $validated['details'],
+            'house_number' => $this->house_number,
+            'postal_code_id' => $this->postal_code_id,
+            'postal_code_letters' => $this->postal_code_letters,
             'json_details' => $this->buildJsonDetails($request)
         ];
 
@@ -163,7 +162,6 @@ class WebreactionController extends Controller
         ];
 
         // For now, return success without calling external API
-        // TODO: Enable external API call when API is properly configured
         try {
             // Set session flag to allow access to thank you page
             session(['form_submitted' => true, 'submission_time' => time()]);

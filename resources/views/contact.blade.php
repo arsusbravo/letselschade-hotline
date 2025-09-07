@@ -122,7 +122,7 @@
             <h2><i class="fas fa-envelope"></i> Contactformulier</h2>
             <p>Vul het onderstaande formulier in en wij nemen binnen 2 uur contact met u op. Uw gegevens worden vertrouwelijk behandeld.</p>
             
-            @include('components.contact-form')
+            @include('components.application-form')
         </section>
 
         <!-- FAQ Section -->

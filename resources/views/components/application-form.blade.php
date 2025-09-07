@@ -23,7 +23,7 @@
         <div class="form-wizard-header">
             <h2 class="form-wizard-title">
                 <i class="fas fa-clipboard-list"></i>
-                Letselschade Aanvraag
+                Letselschadetest
             </h2>
             <p class="form-wizard-subtitle">
                 Vul stap voor stap uw gegevens in voor een gratis en vrijblijvende beoordeling

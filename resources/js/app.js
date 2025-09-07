@@ -1055,12 +1055,7 @@ function submitContactForm(form) {
         }
     });
     
-    // Check privacy checkbox
-    const privacyCheckbox = form.querySelector('input[name="privacy_akkoord"]');
-    if (privacyCheckbox && !privacyCheckbox.checked) {
-        showContactFieldError(privacyCheckbox, 'U moet akkoord gaan met de privacyverklaring');
-        isValid = false;
-    }
+    // Note: Contact form doesn't have privacy checkbox, so skip this validation
     
     if (!isValid) {
         // Scroll to first error

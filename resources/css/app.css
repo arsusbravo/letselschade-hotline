@@ -711,12 +711,19 @@ body {
     margin-right: auto;
 }
 
+.faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .faq-item {
     background: #f8fafc;
     padding: 2rem;
     border-radius: 15px;
     border-left: 4px solid #dc2626;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
 }
 
 .faq-item:hover {
@@ -1523,13 +1530,13 @@ body {
 }
 
 .alert-error {
-    background-color: #fef2f2;
-    border-color: #dc2626;
-    color: #991b1b;
+    background-color: #fffbeb;
+    border-color: #f59e0b;
+    color: #92400e;
 }
 
 .alert-error i {
-    color: #dc2626;
+    color: #f59e0b;
 }
 
 .alert ul {
@@ -1547,23 +1554,23 @@ body {
 
 /* Form Field Error States */
 .form-group.has-error label {
-    color: #dc2626;
+    color: #f59e0b;
 }
 
 .form-group.has-error input,
 .form-group.has-error textarea {
-    border-color: #dc2626 !important;
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
 }
 
 .form-group.has-error .radio-card,
 .form-group.has-error .checkbox-card {
-    border-color: #dc2626 !important;
-    background-color: #fef2f2 !important;
+    border-color: #f59e0b !important;
+    background-color: #fffbeb !important;
 }
 
 .field-error {
-    color: #dc2626;
+    color: #f59e0b;
     font-size: 0.875rem;
     margin-top: 0.5rem;
     display: flex;
@@ -1702,9 +1709,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Required checkbox error state */
 .required-checkbox.has-error {
-    border-color: #dc2626 !important;
-    background-color: #fee2e2 !important;
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2) !important;
+    border-color: #f59e0b !important;
+    background-color: #fffbeb !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important;
 }
 
 /* Required checkbox success state */

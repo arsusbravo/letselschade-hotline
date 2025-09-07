@@ -34,8 +34,8 @@
         </div>
         
         <div class="form-group">
-            <label for="telefoon"><i class="fas fa-phone"></i> Telefoonnummer</label>
-            <input type="tel" id="telefoon" name="telefoon" placeholder="088 076 76 76">
+            <label for="telephone"><i class="fas fa-phone"></i> Telefoonnummer</label>
+            <input type="tel" id="telephone" name="telephone" placeholder="088 076 76 76">
             <small class="field-help">Optioneel - wij bellen u terug als u dit invult</small>
         </div>
         
