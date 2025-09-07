@@ -73,13 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('Form submit event caught - preventing default submission');
-            
             if (validateForm()) {
-                console.log('Form validation passed - submitting with Axios');
                 submitFormWithAxios(this);
             } else {
-                console.log('Form validation failed - showing errors');
                 // Scroll to first error
                 const firstError = form.querySelector('.has-error');
                 if (firstError) {
@@ -96,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (submitBtn) {
             submitBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                console.log('Submit button clicked - triggering form submission');
                 
                 // Trigger the form submit event which will handle validation and Axios
                 form.dispatchEvent(new Event('submit'));
@@ -507,8 +502,6 @@ let maxReachedStep = 1;
 const totalSteps = 6;
 
 function initFormWizard() {
-    console.log('Initializing form wizard...');
-    
     // Hide all steps except the first one
     const steps = document.querySelectorAll('.form-step');
     steps.forEach((step, index) => {
@@ -527,14 +520,11 @@ function initFormWizard() {
     
     // Update progress bar
     updateProgressBar();
-    
-    console.log('Form wizard initialized');
 }
 
 function initNavigationButtons() {
     // Previous buttons
     const prevButtons = document.querySelectorAll('.btn-previous');
-    console.log('Found previous buttons:', prevButtons.length);
     prevButtons.forEach(button => {
         button.addEventListener('click', function() {
             const prevStep = parseInt(this.getAttribute('data-prev'));
@@ -546,7 +536,6 @@ function initNavigationButtons() {
     
     // Next buttons
     const nextButtons = document.querySelectorAll('.btn-next');
-    console.log('Found next buttons:', nextButtons.length);
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
             const nextStep = parseInt(this.getAttribute('data-next'));
@@ -558,7 +547,6 @@ function initNavigationButtons() {
     
     // Submit button
     const submitButton = document.querySelector('.btn-submit');
-    console.log('Found submit button:', submitButton ? 'Yes' : 'No');
 }
 
 function initProgressStepNavigation() {
@@ -572,10 +560,8 @@ function initProgressStepNavigation() {
         progressStep.addEventListener('click', function() {
             // Only allow navigation to completed steps or current step
             if (stepNumber <= maxReachedStep) {
-                console.log(`Navigating to step ${stepNumber} via progress bar`);
                 goToStep(stepNumber);
             } else {
-                console.log(`Cannot navigate to step ${stepNumber} - not yet accessible`);
                 // Add visual feedback for inaccessible steps
                 this.style.animation = 'shake 0.5s ease-in-out';
                 setTimeout(() => {
@@ -599,8 +585,6 @@ function initProgressStepNavigation() {
 }
 
 function goToStep(stepNumber) {
-    console.log(`Going to step ${stepNumber}`);
-    
     if (stepNumber < 1 || stepNumber > totalSteps) {
         console.error('Invalid step number:', stepNumber);
         return;
@@ -640,8 +624,6 @@ function goToStep(stepNumber) {
             if (progressContainer) {
                 progressContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            
-            console.log(`Now on step ${currentStep}`);
         }, 300); // Match the CSS animation duration
     } else {
         // No current step, just show target step
@@ -660,8 +642,6 @@ function goToStep(stepNumber) {
         if (progressContainer) {
             progressContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        
-        console.log(`Now on step ${currentStep}`);
     }
 }
 
@@ -689,8 +669,6 @@ function updateProgressBar() {
 }
 
 function validateCurrentStep() {
-    console.log(`Validating step ${currentStep}`);
-    
     const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
     if (!currentStepElement) {
         console.error('Current step element not found');
@@ -701,12 +679,9 @@ function validateCurrentStep() {
     
     // Validate required fields in current step
     const requiredFields = currentStepElement.querySelectorAll('[required]');
-    console.log(`Found ${requiredFields.length} required fields in step ${currentStep}`);
     
     requiredFields.forEach(field => {
-        console.log(`Validating field: ${field.name || field.id}, value: "${field.value}", type: ${field.type}`);
         if (!validateField(field)) {
-            console.log(`Field validation failed: ${field.name || field.id}`);
             isValid = false;
         }
     });
@@ -725,7 +700,6 @@ function validateCurrentStep() {
     
     // Validate radio groups in current step
     const radioGroups = currentStepElement.querySelectorAll('.radio-group');
-    console.log(`Found ${radioGroups.length} radio groups in step ${currentStep}`);
     
     radioGroups.forEach((group, index) => {
         const requiredRadio = group.querySelector('input[required]');
@@ -733,14 +707,10 @@ function validateCurrentStep() {
             const checked = group.querySelector('input[type="radio"]:checked');
             const formGroup = group.closest('.form-group');
             
-            console.log(`Radio group ${index}: required=${!!requiredRadio}, checked=${!!checked}, formGroup=${!!formGroup}`);
-            
             if (!checked && formGroup) {
-                console.log(`Radio group ${index} validation failed - no option selected`);
                 showError(formGroup, 'Selecteer alstublieft een optie');
                 isValid = false;
             } else if (checked && formGroup) {
-                console.log(`Radio group ${index} validation passed - option selected`);
                 showSuccess(formGroup);
             }
         }
@@ -751,9 +721,7 @@ function validateCurrentStep() {
         case 1:
             // Validate accident type selection
             const accidentTypeField = currentStepElement.querySelector('input[name="soort_ongeval"]:checked');
-            console.log(`Accident type selected: ${accidentTypeField ? accidentTypeField.value : 'none'}`);
             if (!accidentTypeField) {
-                console.log('No accident type selected - validation will fail');
                 isValid = false;
             }
             break;
@@ -815,8 +783,6 @@ function validateCurrentStep() {
             }
             break;
     }
-    
-    console.log(`Final validation result for step ${currentStep}: ${isValid}`);
     
     if (!isValid) {
         // Scroll to first error in current step
@@ -897,7 +863,6 @@ function showStepError(message) {
 // Contact Form Validation
 function initContactFormValidation() {
     const contactForm = document.getElementById('contact-form');
-    console.log('Contact form found:', contactForm ? 'Yes' : 'No');
     if (!contactForm) return;
     
     // Add event listeners to all form fields
@@ -1080,12 +1045,6 @@ function submitContactForm(form) {
     
     // Prepare form data
     const formData = new FormData(form);
-    
-    // Debug: Log form data
-    console.log('Contact form data being submitted:');
-    for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-    }
     
     // Submit with Axios
     axios.post(form.action, formData, {

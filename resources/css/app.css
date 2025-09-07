@@ -2199,6 +2199,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .radio-option {
         padding: 0.65rem;
     }
+
+    .radio-group {
+        display: block !important;
+    }
+
+    .radio-card {
+        padding: 0.5rem !important;
+        flex-direction: row !important;
+        min-height: auto !important;
+        justify-content: left !important;
+    }
+    
+    .radio-text {
+        text-align: left !important;
+    }
+
+    .progress-container {
+        display: none !important;
+    }
     
     .btn-previous,
     .btn-next,
