@@ -143,7 +143,7 @@
             <h3><i class="fas fa-calendar-alt"></i> Stap 2 – Gebeurtenis</h3>
             
             <div class="form-group">
-                <label for="datum_ongeval"><i class="fas fa-calendar"></i> Datum van het ongeval *</label>
+                <label for="ongeval_datum"><i class="fas fa-calendar"></i> Datum van het ongeval *</label>
                 <input type="date" id="ongeval_datum" name="ongeval_datum" max="{{ date('Y-m-d') }}" required>
                 <small class="field-help">Selecteer de datum waarop het ongeval heeft plaatsgevonden (vandaag of eerder)</small>
             </div>
@@ -189,7 +189,7 @@
             </div>
 
             <div class="form-group">
-                <label for="letsel"><i class="fas fa-heartbeat"></i> Korte omschrijving letsel *</label>
+                <label for="letsel_beschrijving"><i class="fas fa-heartbeat"></i> Korte omschrijving letsel *</label>
                 <textarea id="letsel_beschrijving" name="letsel_beschrijving" rows="3" placeholder="Beschrijf kort het opgelopen letsel" required></textarea>
             </div>
             
