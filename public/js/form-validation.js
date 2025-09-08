@@ -17,8 +17,6 @@
             return;
         }
         
-        console.log('Form validation initialized');
-        
         // Real-time validation for required fields
         const requiredFields = form.querySelectorAll('[required]');
         
@@ -72,10 +70,7 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            console.log('Form submission attempted');
-            
             if (validateForm()) {
-                console.log('Form validation passed');
                 // Show loading state
                 const submitBtn = form.querySelector('.submit-btn');
                 if (submitBtn) {

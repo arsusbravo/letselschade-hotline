@@ -123,7 +123,6 @@ class WebreactionController extends Controller
     {
         // Validate the incoming request
         $validated = $request->validate([
-            'lead_type_id' => 'required|int',
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'required|string|email',
@@ -136,11 +135,29 @@ class WebreactionController extends Controller
             'api_password' => $this->apiPassword,
         ];
 
+        switch ($request->input('soort_ongeval')) {
+            case 'bedrijf':
+                $lead_type_id = 2;
+                break;
+            case 'dier':
+                $lead_type_id = 5;
+                break;
+            case 'wegdek':
+                $lead_type_id = 7;
+                break;
+            case 'sportschool':
+                $lead_type_id = 4;
+                break;
+            default:
+                $lead_type_id = 1;
+                break;
+        }
+
         $webreactionData = [
             'webmodule_id' => $this->webmodule_id,
             'lead_webreaction_type_id' => 1,
             'domain_name' => $request->getHost(),
-            'lead_type_id' => $validated['lead_type_id'],
+            'lead_type_id' => $lead_type_id,
             'reference' => null,
             'gender' => $request->input('gender', 'u'),
             'firstname' => $validated['firstname'],
@@ -229,7 +246,6 @@ class WebreactionController extends Controller
             'schade_omschrijving' => 'Beschrijf de opgelopen schade',
             'schadebedrag' => 'Wat is het geschatte schadebedrag?',
             'arbeidsongeschiktheid' => 'Bent u arbeidsongeschikt geraakt?',
-            'ondernemer' => 'Bent u ondernemer?',
             'leeftijd' => 'Wat is uw leeftijd?',
             
             // Step 4 - Extra hulp

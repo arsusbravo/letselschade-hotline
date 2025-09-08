@@ -67,7 +67,6 @@
         @csrf
         
         <!-- Required fields for WebreactionController -->
-        <input type="hidden" name="lead_type_id" value="1">
         <input type="hidden" name="postal_code_id" value="1000">
         <input type="hidden" name="postal_code_letters" value="AA">
         <input type="hidden" name="house_number" value="1">
@@ -81,41 +80,41 @@
             <h3><i class="fas fa-car-crash"></i> Stap 1 – Soort ongeval</h3>
             
             <div class="form-group">
-                <label><i class="fas fa-question-circle"></i> Waarmee had u te maken? *</label>
+                <label><i class="fas fa-question-circle"></i> Waarmee had u te maken?</label>
                 <div class="radio-group">
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="verkeer" required>
                         <div class="radio-card">
                             <i class="fas fa-car radio-icon"></i>
-                            <span class="radio-text">Verkeersongeval</span>
+                            <span class="radio-text">Verkeer</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="bedrijf" required>
                         <div class="radio-card">
                             <i class="fas fa-building radio-icon"></i>
-                            <span class="radio-text">Bedrijfsongeval</span>
+                            <span class="radio-text">Bedrijf</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="dier" required>
                         <div class="radio-card">
                             <i class="fas fa-paw radio-icon"></i>
-                            <span class="radio-text">Letsel door dier</span>
+                            <span class="radio-text">Dier</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="wegdek" required>
                         <div class="radio-card">
                             <i class="fas fa-road radio-icon"></i>
-                            <span class="radio-text">Schade door slecht wegdek</span>
+                            <span class="radio-text">Wegdek</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="sportschool" required>
                         <div class="radio-card">
                             <i class="fas fa-dumbbell radio-icon"></i>
-                            <span class="radio-text">Schade in de sportschool</span>
+                            <span class="radio-text">Sportschool</span>
                         </div>
                     </label>
                 </div>
@@ -149,7 +148,7 @@
             </div>
 
             <div class="form-group">
-                <label><i class="fas fa-users"></i> Is de tegenpartij bekend? *</label>
+                <label><i class="fas fa-users"></i> Is de tegenpartij bekend?</label>
                 <div class="radio-group">
                     <label class="radio-option">
                         <input type="radio" name="tegenpartij" value="ja" required>
@@ -169,7 +168,7 @@
             </div>
 
             <div class="form-group">
-                <label><i class="fas fa-clock"></i> Wilt u snel geholpen worden? *</label>
+                <label><i class="fas fa-clock"></i> Wilt u snel geholpen worden?</label>
                 <div class="radio-group">
                     <label class="radio-option">
                         <input type="radio" name="snel_hulp" value="ja" required>
@@ -215,7 +214,7 @@
             <h3><i class="fas fa-exclamation-triangle"></i> Stap 3 – Schade</h3>
             
             <div class="form-group">
-                <label><i class="fas fa-chart-line"></i> Hoe ernstig is de schade? *</label>
+                <label><i class="fas fa-chart-line"></i> Hoe ernstig is de schade?</label>
                 <div class="radio-group">
                     <label class="radio-option">
                         <input type="radio" name="schade_ernst" value="licht" required>
@@ -273,7 +272,7 @@
             <h3><i class="fas fa-briefcase"></i> Stap 4 – Arbeid & persoonlijke situatie</h3>
             
             <div class="form-group">
-                <label><i class="fas fa-user-injured"></i> Mate van arbeidsongeschiktheid *</label>
+                <label><i class="fas fa-user-injured"></i> Mate van arbeidsongeschiktheid</label>
                 <div class="radio-group">
                     <label class="radio-option">
                         <input type="radio" name="arbeidsongeschiktheid" value="geen" required>
@@ -286,38 +285,19 @@
                         <input type="radio" name="arbeidsongeschiktheid" value="gedeeltelijk" required>
                         <div class="radio-card">
                             <i class="fas fa-user-clock radio-icon"></i>
-                            <span class="radio-text">Gedeeltelijk (geschatte duur)</span>
+                            <span class="radio-text">Gedeeltelijk</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="arbeidsongeschiktheid" value="volledig" required>
                         <div class="radio-card">
                             <i class="fas fa-user-times radio-icon"></i>
-                            <span class="radio-text">Volledig (geschatte duur)</span>
+                            <span class="radio-text">Volledig</span>
                         </div>
                     </label>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label><i class="fas fa-store"></i> Bent u zelfstandig ondernemer? *</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="ondernemer" value="ja" required>
-                        <div class="radio-card">
-                            <i class="fas fa-briefcase radio-icon"></i>
-                            <span class="radio-text">Ja</span>
-                        </div>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="ondernemer" value="nee" required>
-                        <div class="radio-card">
-                            <i class="fas fa-user-tie radio-icon"></i>
-                            <span class="radio-text">Nee</span>
-                        </div>
-                    </label>
-                </div>
-            </div>
 
             <div class="form-group">
                 <label for="leeftijd"><i class="fas fa-birthday-cake"></i> Uw leeftijd *</label>
@@ -344,6 +324,12 @@
                 Stap 5 van 6
             </div>
             <h3><i class="fas fa-hands-helping"></i> Stap 5 – Extra hulp</h3>
+            
+            <!-- Benefit Highlight -->
+            <div class="benefit-highlight">
+                <i class="fas fa-home"></i>
+                Direct gratis advies en bezoek aan huis van een van onze experts
+            </div>
             
             <div class="form-group">
                 <label><i class="fas fa-plus-circle"></i> Welke extra hulp heeft u nodig?</label>

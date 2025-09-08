@@ -23,7 +23,6 @@ class LetselschadeController extends Controller
             'schade_omschrijving' => 'required|string|max:1000',
             'schadebedrag' => 'nullable|string|max:255',
             'arbeidsongeschiktheid' => 'required|string|in:geen,gedeeltelijk,volledig',
-            'ondernemer' => 'required|string|in:ja,nee',
             'leeftijd' => 'required|integer|min:18|max:100',
             'extra_hulp' => 'array',
             'extra_hulp.*' => 'string|in:huishouding,kinderopvang,huisbezoek',

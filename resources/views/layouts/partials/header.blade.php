@@ -3,7 +3,7 @@
     <div class="container">
         <nav class="nav">
             <a href="/" class="logo">
-                <i class="fas fa-shield-alt"></i>
+                <img src="{{ asset('images/logo.png') }}" alt="Letselschade-Hotline Logo" class="logo-img">
                 <span>Letselschade-Hotline</span>
             </a>
             <button class="mobile-menu-toggle" id="mobile-menu-toggle">

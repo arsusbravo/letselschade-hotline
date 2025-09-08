@@ -94,9 +94,14 @@ body {
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
     .mobile-menu-toggle {
         display: none;
+    }
+    
+    /* Desktop: 5 buttons in a row */
+    .radio-group {
+        grid-template-columns: repeat(5, 1fr) !important;
     }
 }
 
@@ -122,6 +127,12 @@ body {
 
 .logo span {
     font-weight: 700;
+}
+
+.logo-img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
 }
 
 .nav-links {
@@ -972,6 +983,29 @@ body {
     width: 100%;
 }
 
+/* Benefit Highlight */
+.benefit-highlight {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px solid #0ea5e9;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0c4a6e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-shadow: 0 2px 10px rgba(14, 165, 233, 0.15);
+}
+
+.benefit-highlight i {
+    font-size: 1.3rem;
+    color: #0ea5e9;
+}
+
 .form-wizard-header {
     background: white;
     border-radius: 15px;
@@ -1272,10 +1306,18 @@ body {
 /* Beautiful Radio Button Cards */
 .radio-group {
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    grid-template-columns: repeat(5, 1fr) !important;
     gap: 0.75rem !important;
     margin-top: 1rem !important;
     width: 100% !important;
+}
+
+/* Override for tablet screens */
+@media (max-width: 1024px) and (min-width: 480px) {
+    .radio-group {
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+    }
 }
 
 .radio-option {
@@ -1631,13 +1673,17 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Required field indicators */
-.form-group label:has([required])::after,
-.form-group label:has(.required)::after {
+/* Required field indicators - ONLY on main question labels */
+.form-group:has([required]) > label::after {
     content: '*';
     color: #dc2626;
     margin-left: 0.25rem;
     font-weight: bold;
+}
+
+/* Remove asterisks from radio button option labels */
+.radio-group .radio-option label::after {
+    content: none !important;
 }
 
 /* Field help text */
