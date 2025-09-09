@@ -265,34 +265,8 @@
                 <i class="fas fa-info-circle"></i>
                 Stap 4 van 6
             </div>
-            <h3><i class="fas fa-briefcase"></i> Stap 4 – Arbeid & persoonlijke situatie</h3>
+            <h3><i class="fas fa-briefcase"></i> Stap 4 – Persoonlijke situatie</h3>
             
-            <div class="form-group">
-                <label><i class="fas fa-user-injured"></i> Mate van arbeidsongeschiktheid</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="arbeidsongeschiktheid" value="geen" required>
-                        <div class="radio-card">
-                            <i class="fas fa-user-check radio-icon"></i>
-                            <span class="radio-text">Geen</span>
-                        </div>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="arbeidsongeschiktheid" value="gedeeltelijk" required>
-                        <div class="radio-card">
-                            <i class="fas fa-user-clock radio-icon"></i>
-                            <span class="radio-text">Gedeeltelijk</span>
-                        </div>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="arbeidsongeschiktheid" value="volledig" required>
-                        <div class="radio-card">
-                            <i class="fas fa-user-times radio-icon"></i>
-                            <span class="radio-text">Volledig</span>
-                        </div>
-                    </label>
-                </div>
-            </div>
 
 
             <div class="form-group">
@@ -347,7 +321,7 @@
                     <label class="checkbox-option">
                         <input type="checkbox" name="extra_hulp[]" value="huisbezoek">
                         <div class="checkbox-card">
-                            <i class="fas fa-user-md checkbox-icon"></i>
+                            <i class="fas fa-user-tie checkbox-icon"></i>
                             <span class="checkbox-text">Bezoek aan huis</span>
                         </div>
                     </label>
