@@ -244,7 +244,6 @@ class WebreactionController extends Controller
             'letsel_beschrijving' => 'Welke letsels heeft u opgelopen?',
             'schade_ernst' => 'Hoe ernstig is de schade?',
             'schade_omschrijving' => 'Beschrijf de opgelopen schade',
-            'schadebedrag' => 'Wat is het geschatte schadebedrag?',
             'arbeidsongeschiktheid' => 'Bent u arbeidsongeschikt geraakt?',
             'leeftijd' => 'Wat is uw leeftijd?',
             

@@ -86,35 +86,35 @@
                         <input type="radio" name="soort_ongeval" value="verkeer" required>
                         <div class="radio-card">
                             <i class="fas fa-car radio-icon"></i>
-                            <span class="radio-text">Verkeer</span>
+                            <span class="radio-text">Letsel verkeersongeval</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="bedrijf" required>
                         <div class="radio-card">
                             <i class="fas fa-building radio-icon"></i>
-                            <span class="radio-text">Bedrijf</span>
+                            <span class="radio-text">Letsel Bedrijfsongeval</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="dier" required>
                         <div class="radio-card">
                             <i class="fas fa-paw radio-icon"></i>
-                            <span class="radio-text">Dier</span>
+                            <span class="radio-text">Letsel veroorzaakt door dieren</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="wegdek" required>
                         <div class="radio-card">
                             <i class="fas fa-road radio-icon"></i>
-                            <span class="radio-text">Wegdek</span>
+                            <span class="radio-text">Letsel door slecht wegdek</span>
                         </div>
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="soort_ongeval" value="sportschool" required>
                         <div class="radio-card">
                             <i class="fas fa-dumbbell radio-icon"></i>
-                            <span class="radio-text">Sportschool</span>
+                            <span class="radio-text">Letsel op sportschool</span>
                         </div>
                     </label>
                 </div>
@@ -245,10 +245,6 @@
                 <textarea id="schade_omschrijving" name="schade_omschrijving" rows="3" placeholder="Beschrijf kort de opgelopen schade" required></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="schadebedrag"><i class="fas fa-euro-sign"></i> Indicatie schadebedrag (indien bekend)</label>
-                <input type="text" id="schadebedrag" name="schadebedrag" placeholder="Bijvoorbeeld: €5.000 of onbekend">
-            </div>
             
             <!-- Navigation -->
             <div class="form-navigation">
