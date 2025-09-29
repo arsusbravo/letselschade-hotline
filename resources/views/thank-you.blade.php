@@ -2,6 +2,12 @@
 
 @section('title', 'Bedankt - Letselschade Hotline')
 
+@section('scripts')
+<script>
+    gtag('event', 'conversion', { 'send_to': 'AW-11561362909/K7m6CLzNi4caEN3L8Ygr', 'value': 1.0, 'currency': 'EUR' });
+</script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="thank-you-page">
