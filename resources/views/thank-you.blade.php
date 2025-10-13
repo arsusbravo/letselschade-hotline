@@ -4,7 +4,12 @@
 
 @section('scripts')
 <script>
-    gtag('event', 'conversion', { 'send_to': 'AW-11561362909/K7m6CLzNi4caEN3L8Ygr', 'value': 1.0, 'currency': 'EUR' });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'event': 'form_submission',
+        'conversion_value': 1.0,
+        'conversion_currency': 'EUR'
+    });
 </script>
 @endsection
 
