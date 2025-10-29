@@ -57,6 +57,62 @@
             </div>
         </section>
 
+        <!-- Client Reviews Section -->
+        @if(isset($reviews) && count($reviews) > 0)
+        <section class="section reviews-section">
+            <h2><i class="fas fa-comments"></i> Wat zeggen onze klanten?</h2>
+            <div class="reviews-slider-container">
+                <button class="slider-nav-btn slider-prev" aria-label="Vorige reviews">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="reviews-slider-wrapper">
+                    <div class="reviews-slider-track">
+                        @foreach($reviews as $review)
+                        <div class="review-card-wrapper">
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-author">
+                                        <div class="review-icon">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                        <div class="review-info">
+                                            <h4 class="review-name">{{ $review['name'] }}</h4>
+                                            <p class="review-date">
+                                                <i class="fas fa-calendar-alt"></i> {{ $review['date'] }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="review-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <p>"{{ $review['comment'] }}"</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <button class="slider-nav-btn slider-next" aria-label="Volgende reviews">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="slider-dots"></div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/reviews" class="cta-button" style="display: inline-flex;">
+                    <i class="fas fa-list"></i>
+                    Bekijk alle beoordelingen
+                </a>
+            </div>
+        </section>
+        @endif
+
+
         <!-- Zo helpen wij u section -->
         <section class="section">
             <h2><i class="fas fa-hands-helping"></i> Zo helpen wij u direct:</h2>

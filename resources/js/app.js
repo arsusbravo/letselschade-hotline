@@ -1,7 +1,10 @@
 import './bootstrap';
 
+console.log('app.js loaded!');
+
 // Application Form Validation and Wizard
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded fired!');
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const navLinks = document.getElementById('nav-links');
@@ -102,6 +105,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Contact Form Validation
     initContactFormValidation();
+    
+    // Initialize Reviews Slider
+    console.log('About to call initReviewsSlider');
+    initReviewsSlider();
+    console.log('initReviewsSlider called');
 });
 
 function validateField(field) {
@@ -1106,6 +1114,264 @@ function submitContactForm(form) {
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
+    });
+}
+
+// Reviews Slider Functionality
+function initReviewsSlider() {
+    console.log('initReviewsSlider called');
+    
+    const sliderTrack = document.querySelector('.reviews-slider-track');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    const dotsContainer = document.querySelector('.slider-dots');
+    
+    console.log('Slider elements:', { sliderTrack, prevBtn, nextBtn, dotsContainer });
+    
+    if (!sliderTrack || !prevBtn || !nextBtn) {
+        console.log('Slider elements not found - exiting');
+        return; // Exit if slider elements don't exist
+    }
+    
+    const reviewCardWrappers = document.querySelectorAll('.review-card-wrapper');
+    if (reviewCardWrappers.length === 0) {
+        console.log('No review card wrappers found');
+        return;
+    }
+    
+    console.log('Found', reviewCardWrappers.length, 'review card wrappers');
+    
+    let currentIndex = 0;
+    const cardsPerView = 2; // Always 2 cards per slide
+    let totalSlides = Math.ceil(reviewCardWrappers.length / cardsPerView);
+    let updateSliderRetries = 0;
+    let cachedWrapperWidth = null; // Cache wrapper width for consistency
+    
+    // Create dots indicator
+    if (dotsContainer && totalSlides > 1) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Ga naar slide ${i + 1}`);
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+    }
+    
+    // Update on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            // Clear cached values on resize so they get remeasured
+            cachedWrapperWidth = null;
+            totalSlides = Math.ceil(reviewCardWrappers.length / cardsPerView);
+            updateSlider();
+        }, 250);
+    });
+    
+    function updateSlider() {
+        if (!reviewCardWrappers || reviewCardWrappers.length === 0) {
+            console.log('No review card wrappers available');
+            return;
+        }
+        
+        // Get wrapper element fresh each time
+        const sliderWrapper = sliderTrack.parentElement;
+        if (!sliderWrapper) {
+            console.log('Slider wrapper not found');
+            return;
+        }
+        
+        // Get wrapper width - ALWAYS measure fresh but consistently
+        // Use getBoundingClientRect for accurate measurement regardless of transform state
+        const rect = sliderWrapper.getBoundingClientRect();
+        let wrapperWidth = rect.width;
+        
+        // Fallback to offsetWidth if getBoundingClientRect fails
+        if (!wrapperWidth || wrapperWidth === 0) {
+            wrapperWidth = sliderWrapper.offsetWidth;
+        }
+        
+        // If still no width, retry
+        if (!wrapperWidth || wrapperWidth === 0) {
+            console.log('Wrapper width not available, retrying...', updateSliderRetries);
+            if (updateSliderRetries < 15) {
+                updateSliderRetries++;
+                setTimeout(updateSlider, 150);
+            }
+            return;
+        }
+        
+        // Use cached width if it exists and is close (within 5px) - prevents flicker
+        // Otherwise update cache
+        if (cachedWrapperWidth && Math.abs(wrapperWidth - cachedWrapperWidth) < 5) {
+            wrapperWidth = cachedWrapperWidth; // Use cached for consistency
+        } else {
+            cachedWrapperWidth = wrapperWidth; // Update cache
+        }
+        
+        updateSliderRetries = 0; // Reset on success
+        
+        // Calculate wrapper width: each wrapper is exactly half of wrapperWidth
+        // With box-sizing: border-box, padding is included in the width
+        // So wrapper width = wrapperWidth / 2 (padding is already accounted for in box-sizing)
+        const wrapperWidthValue = wrapperWidth / cardsPerView;
+        
+        // Round to avoid sub-pixel issues
+        const roundedWrapperWidth = Math.round(wrapperWidthValue * 100) / 100;
+        
+        // Set all wrappers to the calculated width
+        reviewCardWrappers.forEach((wrapper, index) => {
+            wrapper.style.width = roundedWrapperWidth + 'px';
+            wrapper.style.minWidth = roundedWrapperWidth + 'px';
+            wrapper.style.maxWidth = roundedWrapperWidth + 'px';
+            wrapper.style.flexShrink = '0';
+            wrapper.style.flexGrow = '0';
+            wrapper.style.boxSizing = 'border-box';
+        });
+        
+        // Ensure cards inside wrappers take full width (excluding padding)
+        const reviewCards = document.querySelectorAll('.review-card');
+        reviewCards.forEach((card) => {
+            card.style.width = '100%';
+            card.style.maxWidth = '100%';
+        });
+        
+        // Force a reflow after setting widths to ensure accurate measurements
+        void sliderTrack.offsetWidth;
+        void sliderWrapper.offsetWidth;
+        
+        // The slide width equals wrapperWidth (since wrapperWidth = 2 cards + gap)
+        // Use wrapperWidth directly for transform - this ensures perfect alignment
+        const translateX = Math.round(-(currentIndex * wrapperWidth));
+        
+        // Apply transform with precise positioning
+        // Make sure transition is enabled for smooth animation
+        sliderTrack.style.transition = 'transform 0.5s ease';
+        sliderTrack.style.transform = `translateX(${translateX}px)`;
+        sliderTrack.style.willChange = 'transform';
+        
+        console.log('Updating slider:', { 
+            currentIndex, 
+            wrapperWidth: Math.round(wrapperWidth),
+            wrapperWidthValue: roundedWrapperWidth,
+            translateX: translateX, 
+            totalSlides
+        });
+        
+        // Navigation buttons
+        prevBtn.disabled = false;
+        nextBtn.disabled = false;
+        
+        // Update dots
+        if (dotsContainer && totalSlides > 0) {
+            const dots = dotsContainer.querySelectorAll('.slider-dot');
+            const visualIndex = ((currentIndex % totalSlides) + totalSlides) % totalSlides;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === visualIndex);
+            });
+        }
+    }
+    
+    function goToSlide(index) {
+        if (totalSlides === 0) return;
+        // For infinite loop, use modulo arithmetic to wrap around
+        currentIndex = ((index % totalSlides) + totalSlides) % totalSlides;
+        // Force immediate update
+        updateSlider();
+    }
+    
+    function nextSlide() {
+        if (totalSlides === 0) return;
+        // Infinite loop - wrap around
+        currentIndex = (currentIndex + 1) % totalSlides;
+        // Recalculate immediately - wrapper width might have changed
+        updateSlider();
+    }
+    
+    function prevSlide() {
+        if (totalSlides === 0) return;
+        // Infinite loop - wrap around backwards
+        currentIndex = ((currentIndex - 1) % totalSlides + totalSlides) % totalSlides;
+        // Recalculate immediately - wrapper width might have changed
+        updateSlider();
+    }
+    
+    // Event listeners
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    sliderTrack.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    sliderTrack.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next
+                nextSlide();
+            } else {
+                // Swipe right - previous
+                prevSlide();
+            }
+        }
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const sliderSection = document.querySelector('.reviews-section');
+        if (!sliderSection) return;
+        
+        const isSliderFocused = sliderSection.contains(document.activeElement) || 
+                                sliderTrack.contains(document.activeElement);
+        
+        if (isSliderFocused || sliderSection.getBoundingClientRect().top < window.innerHeight && 
+            sliderSection.getBoundingClientRect().bottom > 0) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextSlide();
+            }
+        }
+    });
+    
+    // Initialize slider
+    console.log('Initializing slider with', reviewCardWrappers.length, 'wrappers,', totalSlides, 'slides');
+    
+    // Try immediately
+    updateSlider();
+    
+    // Also try after a short delay in case elements aren't ready
+    setTimeout(() => {
+        console.log('Retry slider initialization (300ms)');
+        updateSlider();
+    }, 300);
+    
+    setTimeout(() => {
+        console.log('Retry slider initialization (800ms)');
+        updateSlider();
+    }, 800);
+    
+    // Try after window load
+    window.addEventListener('load', () => {
+        console.log('Window loaded, updating slider');
+        setTimeout(() => updateSlider(), 100);
     });
 }
 
